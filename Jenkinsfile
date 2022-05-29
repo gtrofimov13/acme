@@ -1,23 +1,37 @@
 pipeline {
     agent any
     stages {
-        stage('Pre-Build') {
+        stage('Static Analysis') {
             steps {
-                sh 'echo "Starting the script"'
-                cleanWs()
-                git branch: 'master', url: 'https://github.com/gtrofimov13/Projects.git'
+                echo 'Run the static analysis to the code'
             }
         }
-        stage('Build') {
+        stage('Compile') {
             steps {
-              sh 'echo "Nothing to Build"'
+                echo 'Compile the source code'
             }
         }
-        stage('Test'){
+        stage('Security Check') {
             steps {
-              sh 'echo "Nothing to Test"'
+                echo 'Run the security check against the application'
             }
         }
+        stage('Run Unit Tests') {
+            steps {
+                echo 'Run unit tests from the source code'
+            }
+        }
+        stage('Run Integration Tests') {
+            steps {
+                echo 'Run only crucial integration tests from the source code' 
+            }
+        }
+        stage('Publish Artifacts') {
+            steps {
+                echo 'Save the assemblies generated from the compilation'
+            }
+        }
+
         stage('Deploy') {
             steps {
               sh '''
@@ -29,6 +43,5 @@ pipeline {
                   -d gt-ngnix
                   '''
             }
-        }
     }
 }
